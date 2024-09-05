@@ -14,14 +14,15 @@ const SelectWithLabel = (props) => {
     } = props
 
     const {
-        options = [],
+        options = [{value:5, name: "Manager"},{value:4, name: "TeamLead"},{value:3, name: "Employee"},{value:2, name: "Intern"}],
         name = "",
         id = "",
         label = "",
-        isRequired = false,
+        isRequired = true,
         isDisabled = false,
         isHidden = false,
         isReadOnly = false
+        
     } = feilds
 
     return (

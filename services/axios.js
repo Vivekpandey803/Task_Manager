@@ -1,35 +1,39 @@
-import request from 'axios';
+import axios from 'axios';
 import Cookies from 'js-cookie';
-
 import store from '@/redux/store';
 import { startLoaderAct, stopLoaderAct } from '@/redux/slice/loader.slice';
 
-const axios = request.create();
+// Create an instance of Axios
+const axiosInstance = axios.create({
+  baseURL: 'http://localhost:3000', // Default API base URL
+});
 
-axios.interceptors.request.use(
-    (config) => {
-        store.dispatch(startLoaderAct())
-        const token = Cookies.get("token");
-        if (token) {
-            config.headers.Authorization = "Bearer " + token
-        }
-        return config;
-    },
-    (error) => {
-        store.dispatch(stopLoaderAct())
-        return Promise.reject(error);
+// Request interceptor to add token and start loader
+axiosInstance.interceptors.request.use(
+  (config) => {
+    store.dispatch(startLoaderAct()); // Start loader
+    const token = Cookies.get('token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`; // Add Authorization header
     }
+    return config;
+  },
+  (error) => {
+    store.dispatch(stopLoaderAct()); // Stop loader on error
+    return Promise.reject(error);
+  }
 );
 
-axios.interceptors.response.use(
-    (config) => {
-        store.dispatch(stopLoaderAct())
-        return config;
-    },
-    (error) => {
-        store.dispatch(stopLoaderAct())
-        return Promise.reject(error);
-    }
-)
+// Response interceptor to stop loader
+axiosInstance.interceptors.response.use(
+  (response) => {
+    store.dispatch(stopLoaderAct()); // Stop loader
+    return response;
+  },
+  (error) => {
+    store.dispatch(stopLoaderAct()); // Stop loader on error
+    return Promise.reject(error);
+  }
+);
 
-export default axios;
+export default axiosInstance;

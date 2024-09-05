@@ -1,6 +1,22 @@
 header {
-  background-color: $primary;
+  background: radial-gradient(circle at 24.1% 68.8%, rgb(50, 50, 50) 0%, rgb(0, 0, 0) 99.4%);  padding: 0;
   img {
     height: 4rem;
   }
+}
+.box{
+  margin-left: 20px;
+}
+.p2{
+  margin-left: 235px;
+
+}
+.p2 img{
+  margin-top: 3px;
+  border: 2px solid rgb(249, 249, 249);
+  border-radius: 100% ;
+  height: 58px;
+  width: 60px;
+  size: 20px;
+
 }

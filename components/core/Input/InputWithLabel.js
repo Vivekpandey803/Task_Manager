@@ -1,54 +1,48 @@
-"use client"
+"use client";
 
+import React from 'react';
 
-import React from 'react'
-const defaultClassNameArray = ["row mt-3", "col-12", "col-12"]
+const defaultClassNameArray = ["row mt-3", "col-12", "col-12"];
 
 const InputWithLabel = (props) => {
     const {
-        feilds = {},
+        fields = {},
         state = {},
-        onChangeHandler = () => { },
+        onChangeHandler = () => {},
         className = defaultClassNameArray,
-        additinalValidation = (value) => value,
-    } = props
+        additionalValidation = (value) => value,
+    } = props;
 
     const {
-
         type = "text",
         label = "",
         placeholder = "",
         name = "",
-
         isDisabled = false,
         isReadOnly = false,
         isRequired = false,
         isHidden = false,
         maxLength = null,
-
-    } = feilds
+    } = fields;
 
     return (
         <div className={className[0]}>
-            {label &&
+            {label && (
                 <div className={className[1]}>
-                    <label>{label}{isRequired && <span />}</label>
+                    <label>{label}{isRequired && <span> *</span>}</label>
                 </div>
-            }
+            )}
             <div className={className[2]}>
                 <input
                     type={type}
                     placeholder={placeholder}
                     name={name}
-
                     className='form-control'
-
                     value={state?.[name]}
                     onChange={(e) => {
-                        e.target.value = additinalValidation(e.target.value)
-                        onChangeHandler(e)
+                        e.target.value = additionalValidation(e.target.value);
+                        onChangeHandler(e);
                     }}
-
                     readOnly={isReadOnly}
                     disabled={isDisabled}
                     hidden={isHidden}
@@ -57,7 +51,7 @@ const InputWithLabel = (props) => {
                 />
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default InputWithLabel
+export default InputWithLabel;

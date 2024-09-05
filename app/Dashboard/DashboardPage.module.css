@@ -1,0 +1,65 @@
+
+.containerFluid {
+    min-height: 100vh;
+    display: flex;
+  }
+  .d{
+    background-image: url("https://png.pngtree.com/thumb_back/fw800/background/20240209/pngtree-task-management-business-planning-app-illustration-vector-image_15623958.jpg");
+  }
+  
+  .sidebar {
+    height: 100vh;
+    padding: 1rem;
+    background-color: #1A2234; 
+    box-shadow: 0 4px 8px rgba(0, 0, 139, 0.3); 
+    position: relative;
+  }
+  
+
+  .navLink {
+    color:#F28C28;
+    margin-bottom: 1rem;
+    transition: background-color 0.3s, transform 0.3s;
+  }
+  
+  /* Sidebar link hover effect */
+  .navLinkHover:hover {
+    background-color: #F28C28; /* Blue background on hover */
+    color: white; /* White text on hover */
+    transform: scale(1.05); /* Slightly enlarge on hover */
+  }
+  
+  /* Main content area */
+  .mainContent {
+    margin-left: 250px; /* Adjust based on sidebar width */
+    padding: 2rem;
+    flex-grow: 1;
+    background-color: #1A2234;
+    box-shadow: 0 4px 8px rgba(0, 0, 139, 0.2); /* Dark blue shadow */
+    border-radius: 8px; /* Rounded corners */
+  }
+  
+  /* Main content header */
+  .dFlex {
+    margin-bottom: 2rem;
+  }
+  
+
+  
+  /* Additional styling for cards and other elements */
+  .card {
+    box-shadow: 0 4px 8px rgba(0, 0, 139, 0.2); /* Dark blue shadow */
+    border-radius: 8px; /* Rounded corners */
+    margin-bottom: 1.5rem;
+  }
+  
+  .cardHeader {
+    background-color: #F28C28;
+    color: white;
+    font-weight: bold;
+  }
+  
+  .cardBody {
+    padding: 1.5rem;
+  }
+ 
