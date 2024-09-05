@@ -1,6 +1,6 @@
-"use client"
-import React, { useState ,useEffect} from 'react';
-import { Button, Form, Table, Modal, Toast, ToastContainer } from 'react-bootstrap';
+"use client";
+import React, { useState, useEffect } from 'react';
+import { Button, Form, Table, Modal } from 'react-bootstrap';
 import SideBar from '@/components/core/SideBar';
 import PageNav from '@/components/core/PageNav';
 import { useTaskTracker } from '@/hooks/PageHooks/useTaskTrackerHooks';
@@ -10,10 +10,9 @@ const TaskTrackerPage = () => {
   const { tasks, addNewTask, updateTask, deleteTask } = useTaskTracker();
   const [employees, setEmployees] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  const [toast, setToast] = useState({ show: false, message: "", variant: "" });
   const [editMode, setEditMode] = useState(false);
   const [currentTaskId, setCurrentTaskId] = useState(null);
-  const [newTaskData, setNewTaskData] = useState({
+  const [taskData, setTaskData] = useState({
     assigned_by: "",
     assigned_to: "",
     task_name: "",
@@ -24,62 +23,45 @@ const TaskTrackerPage = () => {
     comment: "",
   });
 
-  const fetchEmployeeData = async () => {
-    const data = await fetchEmployees();
-    setEmployees(data);
-  };
-
   useEffect(() => {
-    fetchEmployees();
+    const fetchEmployeeData = async () => {
+      const data = await fetchEmployees();
+      setEmployees(data);
+    };
+    fetchEmployeeData();
   }, []);
 
-  const showToast = (message, variant) => {
-    setToast({ show: true, message, variant });
-    setTimeout(() => setToast({ show: false, message: "", variant: "" }), 3000);
-  };
+  const handleTaskChange = (e) => setTaskData({ ...taskData, [e.target.name]: e.target.value });
 
   const handleAddNewTask = async () => {
     try {
-      await addNewTask(newTaskData);
+      await addNewTask(taskData);
       setShowModal(false);
       resetForm();
-      showToast("Task added successfully!", "success");
     } catch (error) {
-      showToast("Failed to add task.", "danger");
+      console.error("Failed to add task", error);
     }
   };
 
   const handleUpdateTask = async () => {
     try {
-      await updateTask(currentTaskId, newTaskData);
+      await updateTask(currentTaskId, taskData);
       setShowModal(false);
       resetForm();
-      showToast("Task updated successfully!", "success");
     } catch (error) {
-      showToast("Failed to update task.", "danger");
+      console.error("Failed to update task", error);
     }
   };
 
-  const handleNewTaskChange = (e) => setNewTaskData({ ...newTaskData, [e.target.name]: e.target.value });
-
   const handleEditTask = (task) => {
     setCurrentTaskId(task.task_id);
-    setNewTaskData({
-      assigned_by: task.assigned_by,
-      assigned_to: task.assigned_to,
-      task_name: task.task_name,
-      assigned_date: task.assigned_date,
-      start_date: task.start_date,
-      end_date: task.end_date,
-      status: task.status,
-      comment: task.comment,
-    });
+    setTaskData(task);
     setEditMode(true);
     setShowModal(true);
   };
 
   const resetForm = () => {
-    setNewTaskData({
+    setTaskData({
       assigned_by: "",
       assigned_to: "",
       task_name: "",
@@ -175,8 +157,8 @@ const TaskTrackerPage = () => {
               <Form.Control
                 as="select"
                 name="assigned_by"
-                value={newTaskData.assigned_by}
-                onChange={handleNewTaskChange}
+                value={taskData.assigned_by}
+                onChange={handleTaskChange}
               >
                 <option value="">Select Employee</option>
                 {employees.map((employee) => (
@@ -191,8 +173,8 @@ const TaskTrackerPage = () => {
               <Form.Control
                 as="select"
                 name="assigned_to"
-                value={newTaskData.assigned_to}
-                onChange={handleNewTaskChange}
+                value={taskData.assigned_to}
+                onChange={handleTaskChange}
               >
                 <option value="">Select Employee</option>
                 {employees.map((employee) => (
@@ -207,8 +189,8 @@ const TaskTrackerPage = () => {
               <Form.Control
                 type="text"
                 name="task_name"
-                value={newTaskData.task_name}
-                onChange={handleNewTaskChange}
+                value={taskData.task_name}
+                onChange={handleTaskChange}
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="assignedDate">
@@ -216,8 +198,8 @@ const TaskTrackerPage = () => {
               <Form.Control
                 type="date"
                 name="assigned_date"
-                value={newTaskData.assigned_date}
-                onChange={handleNewTaskChange}
+                value={taskData.assigned_date}
+                onChange={handleTaskChange}
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="startDate">
@@ -225,8 +207,8 @@ const TaskTrackerPage = () => {
               <Form.Control
                 type="date"
                 name="start_date"
-                value={newTaskData.start_date}
-                onChange={handleNewTaskChange}
+                value={taskData.start_date}
+                onChange={handleTaskChange}
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="endDate">
@@ -234,8 +216,8 @@ const TaskTrackerPage = () => {
               <Form.Control
                 type="date"
                 name="end_date"
-                value={newTaskData.end_date}
-                onChange={handleNewTaskChange}
+                value={taskData.end_date}
+                onChange={handleTaskChange}
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="status">
@@ -243,8 +225,8 @@ const TaskTrackerPage = () => {
               <Form.Control
                 type="text"
                 name="status"
-                value={newTaskData.status}
-                onChange={handleNewTaskChange}
+                value={taskData.status}
+                onChange={handleTaskChange}
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="comment">
@@ -252,8 +234,8 @@ const TaskTrackerPage = () => {
               <Form.Control
                 type="text"
                 name="comment"
-                value={newTaskData.comment}
-                onChange={handleNewTaskChange}
+                value={taskData.comment}
+                onChange={handleTaskChange}
               />
             </Form.Group>
           </Form>
@@ -270,12 +252,6 @@ const TaskTrackerPage = () => {
           </Button>
         </Modal.Footer>
       </Modal>
-
-      <ToastContainer position="top-end">
-        <Toast show={toast.show} bg={toast.variant}>
-          <Toast.Body>{toast.message}</Toast.Body>
-        </Toast>
-      </ToastContainer>
     </div>
   );
 };

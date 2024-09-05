@@ -1,4 +1,3 @@
-// components/ToastContainer.js
 import React, { useState, useEffect } from 'react';
 import { Toast, ToastContainer as BootstrapToastContainer } from 'react-bootstrap';
 

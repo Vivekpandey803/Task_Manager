@@ -1,10 +1,10 @@
-"use client"
-import React from 'react';
-import { Table, Button, Form } from 'react-bootstrap';
-import SideBar from '@/components/core/SideBar';
-import PageNav from '@/components/core/PageNav';
-import AddNewItemModal from '@/components/core/AddNewItemModel';
-import useRoleDetails from '@/hooks/PageHooks/useRoleHooks';
+"use client";
+import React from "react";
+import { Table, Button, Form } from "react-bootstrap";
+import SideBar from "@/components/core/SideBar";
+import PageNav from "@/components/core/PageNav";
+import AddNewItemModal from "@/components/core/AddNewItemModel";
+import useRoleDetails from "@/hooks/PageHooks/useRoleHooks";
 
 const RoleDetailsPage = () => {
   const {
@@ -12,7 +12,6 @@ const RoleDetailsPage = () => {
     editingRow,
     editingData,
     showAddRoleModal,
-    
     handleEdit,
     handleDelete,
     confirmDelete,
@@ -20,7 +19,6 @@ const RoleDetailsPage = () => {
     handleSave,
     handleEditChange,
     setShowAddRoleModal,
-    
   } = useRoleDetails();
 
   const formFields = [
@@ -45,7 +43,12 @@ const RoleDetailsPage = () => {
               Add New Role
             </Button>
           </div>
-          <Table bordered responsive hover className="table table-bordered rounded-3 text-center">
+          <Table
+            bordered
+            responsive
+            hover
+            className="table table-bordered rounded-3 text-center"
+          >
             <thead className="table-dark">
               <tr>
                 <th>S.No</th>
@@ -73,19 +76,35 @@ const RoleDetailsPage = () => {
                     <td>
                       {editingRow === role.id ? (
                         <>
-                          <Button variant="success" size="sm mx-1" onClick={handleSave}>
+                          <Button
+                            variant="success"
+                            size="sm mx-1"
+                            onClick={handleSave}
+                          >
                             Save
                           </Button>
-                          <Button variant="warning" size="sm" onClick={() => setEditingRow(null)}>
+                          <Button
+                            variant="warning"
+                            size="sm"
+                            onClick={() => setEditingRow(null)}
+                          >
                             Cancel
                           </Button>
                         </>
                       ) : (
                         <>
-                          <Button variant="warning" size="sm mx-1" onClick={() => handleEdit(role)}>
+                          <Button
+                            variant="warning"
+                            size="sm mx-1"
+                            onClick={() => handleEdit(role)}
+                          >
                             Update
                           </Button>
-                          <Button variant="danger" size="sm" onClick={() => handleDelete(role.id)}>
+                          <Button
+                            variant="danger"
+                            size="sm"
+                            onClick={() => handleDelete(role.id)}
+                          >
                             Delete
                           </Button>
                         </>
@@ -109,7 +128,6 @@ const RoleDetailsPage = () => {
             onChange={handleEditChange}
             formFields={formFields}
           />
-      
         </div>
       </div>
     </div>
